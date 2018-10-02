@@ -142,9 +142,9 @@ ENDIF (ENABLE_BLACKMAGIC)
 # Check for OpenMP (used for multi-core processing)
 FIND_PACKAGE(OpenMP)
 
-if (OPENMP_FOUND)
+if (OPENMP_CXX_FOUND)
    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS} ")
-endif(OPENMP_FOUND)
+endif(OPENMP_CXX_FOUND)
 
 ################### ZEROMQ #####################
 # Find ZeroMQ library (used for socket communication & logging)
