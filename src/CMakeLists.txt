@@ -178,10 +178,9 @@ ENDIF (ENABLE_BLACKMAGIC)
 ################### OPENMP #####################
 # Check for OpenMP (used for multi-core processing)
 FIND_PACKAGE(OpenMP)
-
-if (OPENMP_FOUND)
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS} ")
-endif(OPENMP_FOUND)
+if (NOT OpenMP_CXX_FOUND)
+	message(FATAL_ERROR "Unable to find OpenMP CXX Target")
+endif()
 
 ################### ZEROMQ #####################
 # Find ZeroMQ library (used for socket communication & logging)
@@ -303,6 +302,7 @@ SET ( REQUIRED_LIBRARIES
 		${PROFILER}
 		${JSONCPP_LIBRARY}
 		${ZMQ_LIBRARIES}
+		OpenMP::OpenMP_CXX
 		)
 
 IF (AVCODEC_FOUND)
@@ -351,7 +351,7 @@ IF (WIN32)
 ENDIF(WIN32)
 
 # Link all referenced libraries
-target_link_libraries(openshot ${REQUIRED_LIBRARIES})
+target_link_libraries(openshot PUBLIC ${REQUIRED_LIBRARIES})
 
 
 ############### CLI EXECUTABLE ################
